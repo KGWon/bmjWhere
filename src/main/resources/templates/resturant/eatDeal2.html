@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+
+        <style>
+
+
+            .barcode{
+
+                width: 60%; /* need to overwrite inline dimensions */
+                height: auto;
+
+
+            }
+
+            /*새로만든 잇딜*/
+            body {
+                background: #f2f2f2;
+
+            }
+
+            img {
+                width: 100%; /* need to overwrite inline dimensions */
+                height: 250px;
+                object-fit: cover;
+            }
+
+            h2 {
+                margin-bottom: .5em;
+            }
+
+            h5 {
+                color: #6f42c1;
+            }
+
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                grid-gap: 1em;
+            }
+
+
+            /* hover styles */
+            .location-listing {
+                position: relative;
+            }
+
+            .location-image {
+                line-height: 0;
+                overflow: hidden;
+            }
+
+            .location-image img {
+                filter: blur(0px);
+                transition: filter 0.3s ease-in;
+                transform: scale(1.1);
+            }
+
+            .location-title {
+                font-size: 1.5em;
+                font-weight: bold;
+                text-decoration: none;
+                z-index: 1;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+                opacity: 0;
+                transition: opacity .5s;
+                background: rgba(90, 0, 10, 0.4);
+                color: white;
+
+                /* position the text in t’ middle*/
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+
+            .location-listing:hover .location-title {
+                opacity: 1;
+            }
+
+            .location-listing:hover .location-image img {
+                filter: blur(2px);
+            }
+
+
+            /* for touch screen devices */
+            @media (hover: none) {
+                .location-title {
+                    opacity: 1;
+                }
+
+                .location-image img {
+                    filter: blur(2px);
+                }
+            }
+
+            <!--
+            -->
+
+            .content {
+                text-align-last: center;
+            }
+
+            img {
+                text-align-last: center;
+
+            }
+
+            .restaurantName {
+                color: #fd7e14;
+                font-weight: bolder;
+                font-size: 15px;
+            }
+
+            .foodName {
+                font-weight: bold;
+                font-size: 13px;
+            }
+
+
+            /* 팝업창*/
+            .popup_btn a {
+                display: inline-block;
+                padding: 10px;
+                background: rgb(140, 195, 247);
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.7);
+                transition: opacity 500ms;
+                visibility: hidden;
+                opacity: 0;
+                z-index: 900;
+            }
+
+            .overlay:target {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            .popup {
+                position: fixed;
+                width: 60%;
+                padding: 10px;
+                max-width: 500px;
+                border-radius: 10px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(255, 255, 255, .9);
+                /* "delay" the visibility transition */
+                -webkit-transition: opacity .5s, visibility 0s linear .5s;
+                transition: opacity .5s, visibility 0s linear .5s;
+                z-index: 1;
+                text-align-last: center;
+            }
+
+            .popup:target {
+                visibility: visible;
+                opacity: 1;
+                /* cancel visibility transition delay */
+                -webkit-transition-delay: 0s;
+                transition-delay: 0s;
+            }
+
+            .popup-close {
+                position: absolute;
+                padding: 10px;
+                max-width: 500px;
+                border-radius: 10px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(255, 255, 255, .9);
+            }
+
+            .popup .close {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                padding: 5px;
+                color: #000;
+                transition: color .3s;
+                font-size: 2em;
+                line-height: .6em;
+                font-weight: bold;
+            }
+
+            .popup .close:hover {
+                color: #00E5EE;
+            }
+
+            /* 팝업창 끝*/
+
+            h1 {
+                font-family: 'Jua', sans-serif;
+            }
+
+            .content {
+                margin-right: 15%;
+                margin-left: 15%;
+            }
+
+            h3 {
+                color: darkorange;
+                font-weight: bold;
+
+
+            }
+
+            h4 {
+                font-size: 17px;
+                color: #353535;
+                font-weight: bold;
+
+            }
+
+
+            p {
+                font-size: 15px;
+                color: #8C8C8C;
+                font-weight: bold;
+            }
+
+            p1 {
+                color: white;
+                font-size: 10px;
+            }
+
+
+        </style>
+
+        <body>
+
+        <div class="header"><br>
+
+            <h1 class="page-item" style="color: #fd7e14"><br/><br/>
+                EAT딜에서 엄선한 할인 정보</h1>
+            <h5 class="eatDealMent">"'할인 싫어하는 사람 없다'에 제 쿠폰을 쏘겠어요~"</h5>
+            <hr>
+        </div>
+
+        <div class="content">
+            <div class="card-deck">
+                <div class="card">
+                    <article id="3685" class="location-listing">
+
+                        <a href="#pop01">
+                            <img src="/image/음식점사진/문버거1.jpg" class="card-img-top" alt="..." width="400px"
+                                 height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[문버거]</h4>
+                            <p class="card-text">부산 수영구 - 브런치</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="card">
+                    <article id="3686" class="location-listing">
+
+                        <a href="#pop02">
+                            <img src="/image/음식점사진/사이먼커피2.jpg"
+                                 class="card-img-top" alt="..." width="400px" height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[사이먼커피]</h4>
+                            <p class="card-text">부산 연제구 - 카페</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="card">
+                    <article id="3687" class="location-listing">
+
+                        <a href="#pop03">
+                            <img src="/image/음식점사진/태종대%20욜로조개구이1.jpg"
+                                 class="card-img-top" alt="..." width="400px" height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[태종대 욜로조개구이]</h4>
+                            <p class="card-text">부산 영도구 - 조개구이</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <br>
+            <div class="card-deck">
+                <div class="card">
+                    <article id="3688" class="location-listing">
+
+                        <a href="#pop04">
+                            <img src="/image/음식점사진/매드독스2.jpg" class="card-img-top" alt="..." width="450px"
+                                 height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[매드독스]</h4>
+                            <p class="card-text">부산 수영구 - 피자</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="card">
+                    <article id="3689" class="location-listing">
+
+                        <a href="#pop05">
+                            <img src="/image/음식점사진/해운대암소갈비집2.jpg"
+                                 class="card-img-top" alt="..." width="450px" height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[해운대암소갈비집]</h4>
+                            <p class="card-text">부산 해운대구 - 육류</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="card">
+                    <article id="3690" class="location-listing">
+
+                        <a href="#pop06">
+                            <img src="/image/음식점사진/톤쇼우1.jpg"
+                                 class="card-img-top" alt="..." width="450px" height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[톤쇼우]</h4>
+                            <p class="card-text">부산 수영구 - 돈가스</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <br>
+            <div class="card-deck">
+                <div class="card">
+                    <article id="3691" class="location-listing">
+
+                        <a href="#pop07">
+                            <img src="/image/음식점사진/신기산업1.jpg" class="card-img-top" alt="..." width="450px"
+                                 height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[신기산업]</h4>
+                            <p class="card-text">부산 영도구 - 카페 & 디저트</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="card">
+                    <article id="3692" class="location-listing">
+
+                        <a href="#pop08">
+                            <img src="/image/음식점사진/이슈모리3.jpg"
+                                 class="card-img-top" alt="..." width="450px" height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[이슈모리]</h4>
+                            <p class="card-text">부산 진구 - 초밥 & 롤</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="card">
+                    <article id="3693" class="location-listing">
+
+                        <a href="#pop09">
+                            <img src="/image/음식점사진/홍유단.jpg"
+                                 class="card-img-top" alt="..." width="450px" height="300px">
+                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title">[홍유단]</h4>
+                            <p class="card-text">부산 수영구 - 중식</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+
+
+            <div id="pop01" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/문버거2.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [수영] 문버거 - 브런치</div>
+                    <div class="foodName">오후 9시 이후 버거류 20% 할인</div>
+                    <br/>
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="pop02" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/사이먼커피2.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [연제] 사이먼커피 - 카페</div>
+                    <div class="foodName">테이크아웃 고객 전메뉴 20% 할인</div>
+                    <br>
+
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="pop03" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/태종대%20욜로조개구이1.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [영도] 태종대 욜로조개구이 - 조개요리</div>
+                    <div class="foodName">오후 5시 이전 조개구이 20% 할인</div>
+                    <br>
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="pop04" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/매드독스2.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [수영] 매드독스 - 피자</div>
+                    <div class="foodName">오후 8시 이후 피자류 15% 할인</div>
+                    <br>
+
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="pop05" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/해운대암소갈비집3.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [해운대] 해운대암소갈비집 - 육류</div>
+                    <div class="foodName">오후 3시 이전 전메뉴 15% 할인</div>
+                    <br>
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="pop06" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/톤쇼우1.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [수영] 톤쇼우 - 돈가스</div>
+                    <div class="foodName">테이크아웃 고객 10% 할인</div>
+                    <br>
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="pop07" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/신기산업1.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [영도] 신기산업 - 카페</div>
+                    <div class="foodName">세트메뉴 구매시 15% 할인</div>
+                    <br>
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="pop08" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/이슈모리3.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [진구] 이슈모리 - 초밥</div>
+                    <div class="foodName">테이크아웃 고객 20% 할인</div>
+                    <br>
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pop09" class="overlay">
+                <div class="popup">
+                    <a href="#none" class="close">&times;</a>
+                    <h5> < 할인정보 > </h5>
+
+                    <div><img src="/image/음식점사진/홍유단.jpg" width="650" height="383"></div>
+                    <div class="restaurantName"> [수영구] 홍유단 - 중식</div>
+                    <div class="foodName">런치메뉴 주문 고객 20% 할인</div>
+                    <br>
+                    <div class="barc">
+                        <span sec:authorize="isAnonymous()">
+                            <a href="http://localhost:8081/resturant/eatDeal2"> <img class="barcode" src="/image/barcode4.png"></a><br/></span>
+                        <span sec:authorize="isAuthenticated()">
+                        <img class="barcode" src="/image/barcode3.png"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+        </body>
+    </th:block>
+</th:block>
+</div>
+</html>

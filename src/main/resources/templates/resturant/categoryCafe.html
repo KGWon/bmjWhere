@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+
+        <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#div1").load("http://localhost:8081/resturant/list1?page=1&type=c&keyword=카페");
+                });
+            </script>
+        </head>
+
+        <style>
+            .content {
+            }
+
+            .img3{
+                object-fit: cover;
+
+            }
+
+
+            .restaurantName {
+                color: #1e7e34;
+                font-weight: bolder;
+                font-size: 22px;
+            }
+
+            .restaurantAddress {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .restaurantType {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .foodName {
+                font-weight: bold;
+                font-size: 13px;
+            }
+
+            .txt_line {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 8; /* 라인수 */
+                -webkit-box-orient: vertical;
+                word-wrap: break-word;
+                line-height: 1.5em;
+                height: auto;
+                font-size: 13.5px;
+                font-family: auto;
+                text-overflow: ellipsis;
+            }
+
+        </style>
+
+        <body>
+
+        <div class="header"><br>
+
+            <h1 class="page-item" style="color: #fd7e14"><br/><br/>
+                카페 베스트 TOP3</h1>
+            <h8>“2021년 부산 카페 투어는 BMJ WHERE가 책임질게!”</h8>
+            <br>
+            <hr>
+        </div>
+
+        <div class="content" style="text-align:-webkit-center">
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=18&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/비아조3.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">1. 비아조</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                카페 & 디저트</a>
+                            <p class="card-text" th:class="restaurantAddress">부산 강서구 식만로 164 </p>
+                            <p class="txt_line">
+                                ※ 반려동물 출입은 금하오니 양해 부탁드립니다.
+                                ※ 외부음식은 반입불가능 하오니 양해 부탁드립니다.
+                                비아조(Viaggio)란, 이탈리아어로 여행 이라는 뜻을 갖고있으며,
+                                흐르는 낙동강과 시원한 바람을 쐬며 잠시 카페에서 쉬었다 여행하시라는 의미입니다.
+                                차투르블랜딩 원두를 중점으로한 메뉴를 기반으로 하고 있습니다.
+                                항상 고객분들의 마음에 들도록 최선을 다하는 카페가 되겠습니다. 감사합니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=19&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/사이먼커피2.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">2. 사이먼커피</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                커피</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 연제구 중앙대로1056번길 2</p>
+                            <p class="txt_line">
+                                아무것도 모르고 시작한 4평짜리 작은 테이크아웃
+                                몇 안되는 단골손님들과 진지한 커피 이야기로, 때로는 살아가는 인생 이야기로 하루 종일 웃고 떠들며 커피에 빠져든지도 벌써 10년차가 되었습니다.
+                                모든게 서툴던 시절, 기본만 잘 지켜나가자는 다짐으로 시작한 회사는
+                                직원 모두가 그 마음으로 커피 공부에 매진하고 전 세계 커피인들과 교류하며 대한민국을 대표하는 스페셜티커피 전문회사로 성장하였습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=20&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/신기산업1.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">3. 신기산업</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                카페 & 디저트</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 영도구 와치로51번길 2</p>
+                            <p class="txt_line">
+                                안녕하세요! 꼬불꼬불한 산복도로를 오르다보면
+                                산꼭대기에 컨테이너로 만든 자랑스러운 부산항 뷰를 한눈에 보실수 있는 신기산업이 있습니다. 또한 신기숲(카페),신기잡화점,식분도영(분식점)등을 운영하고
+                                있습니다. 먹거리,즐길거리,볼거리를 놓치지마세요.
+                                주차는 신기산업내 (25석). 신기숲(15석)을 보유하고 있습니다.<br>
+                                주말에는 보통 만차이오니 가까운 장소에 주차를 하고 걸어오시길 바랍니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+
+        </body>
+        <div>
+            <br>
+            <div style="text-align-last: center"><h3>< 부산 추천 카페 전체보기 ></h3></div>
+            <div id="div1"></div>
+        </div>
+        <br/> <br/>
+    </th:block>
+</th:block>
+</html>

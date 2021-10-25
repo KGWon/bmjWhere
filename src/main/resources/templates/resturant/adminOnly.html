@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+
+    <!--최종버전-->
+
+</head>
+
+
+<body>
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+        <div class="header"><br>
+
+            <h1 class="page-item" style="color: #fd7e14"><br/><br/>
+                <img src="" width="100">관리자만 볼 수있는 페이지
+                <img src="" width="100"></h1>  <br/>
+            <h8> 이제 맛집리스트 등록과 수정이 가능합니다! ~회원관리 페이지 개설 예정~</h8>  <br/>
+            <br/>
+                    <a th:href="@{/resturant/register}">
+                        <button type="button" class="btn btn-outline-primary">새로운 맛집 등록</button>
+                    </a>
+
+
+            <a th:href="@{/resturant/logout}">
+                <button type="button" class="btn btn-outline-primary">로그아웃</button>
+            </a>
+
+        </div>
+        <p></p>
+
+    </th:block>
+</th:block>
+
+</body>
+</html>

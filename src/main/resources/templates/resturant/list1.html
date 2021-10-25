@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+
+        }
+
+        #idv {
+
+            width: 150px;
+            height: 100px;
+            float: left; /*이미지간 공백없앰*/
+            object-fit: cover;
+        }
+
+        .content {
+            margin-right: 20%;
+            margin-left: 20%;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="content" style="margin-top: 30px">
+    <form action="/resturant/list" method="get" id="searchForm">
+        <div class="input-group">
+            <input type="hidden" name="page" value="1">
+
+        </div>
+    </form>
+    <table class="table table-striped" style="text-align-last: center">
+        <thead>
+        <tr>
+            <th scope="col">가게명</th>
+            <th scope="col">사진</th>
+            <!--     <th scope="col">. </th>-->
+            <th scope="col">분류</th>
+            <th scope="col">평점</th>
+            <th scope="col">운영시간</th>
+            <th scope="col">등록 시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto : ${result.dtoList}">
+            <th scope="row">
+                <a th:href="@{/resturant/read(rno=${dto.rno}, page=${result.page})}">[[${dto.title}]]</a>
+            </th>
+            <!-- ResturantDTO 안에 있는 imageDTOList의 크기가 0보다 크다면 그리고 경로에 사진이 없지 않다면 -->
+            <!-- 즉, 사진이 있으며 저장 경로에 사진이 존재하다면 <img> 태그 생성 -->
+            <td><img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0].path != null}" width="100px"
+                     height="100px"
+                     th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnailURL()}|">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+
+            <!-- <th><b>. </b></th> -->
+            <td>[[${dto.type}]]</b></td>
+            <td>[[${dto.avg}]]</b></td>
+            <td>[[${dto.operatingTime}]]</b></td>
+            <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+        </tr>
+        </tbody>
+    </table>
+  <!--  <ul class="pagination h-100 justify-content-center align-items-center">
+        <li class="page-item" th:if="${result.prev}">
+            <a class="page-link" th:href="@{/resturant/list(page=${result.start - 1})}" tabindex="-1">이전</a>
+        </li>
+        <li th:class=" 'page-item ' + ${result.page == page?'active':''}" th:each="page:${result.pageList}">
+            <a class="page-link" th:href="@{/resturant/list(page=${page})}">[[${page}]]</a>
+        </li>
+        <li class="page-item" th:if="${result.next}">
+            <a class="page-link" th:href="@{/resturant/list(page=${result.end + 1})}">다음</a>
+        </li>
+    </ul>-->
+</div>
+
+<script th:inline="javascript">
+    var msg = [[${msg}]];
+    console.log(msg);
+
+    if (msg) {
+        $(".modal").modal();
+    }
+
+    var searchForm = $("#searchForm");
+    $('.btn-search').click(function (e) {
+        searchForm.submit();
+    });
+
+    $('.btn-clear').click(function (e) {
+        searchForm.empty().submit();
+    });
+</script>
+</body>
+</th:block>
+</th:block>
+</html>

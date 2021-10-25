@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+
+        <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#div1").load("http://localhost:8081/resturant/list1?page=1&type=c&keyword=일식");
+                });
+            </script>
+        </head>
+
+        <style>
+            .content {
+            }
+            .img3{
+                object-fit: cover;
+
+            }
+            .restaurantName {
+                color: #1e7e34;
+                font-weight: bolder;
+                font-size: 22px;
+            }
+
+            .restaurantAddress {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .restaurantType {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .foodName {
+                font-weight: bold;
+                font-size: 13px;
+            }
+
+            .txt_line {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 8; /* 라인수 */
+                -webkit-box-orient: vertical;
+                word-wrap: break-word;
+                line-height: 1.5em;
+                height: auto;
+                font-size: 13.5px;
+                font-family: auto;
+                text-overflow: ellipsis;
+            }
+
+        </style>
+
+        <body>
+
+        <div class="header"><br>
+
+            <h1 class="page-item" style="color: #fd7e14"><br/><br/>
+                일식 베스트 TOP3</h1>
+            <h8>"'한국에서도 다양한 일식을 느껴보세요~ 스시 라멘 오이시이~~~"</h8>
+            <br>
+            <hr>
+        </div>
+
+        <div class="content" style="text-align:-webkit-center">
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=10&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/송원일식3.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">1. 송원일식</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                일본식 라면</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 진구 신천대로62번길 45 1층 </p>
+                            <p class="txt_line">
+                                점심엔 특선코스 29,000원을 비롯한 단품식사요리가 많습니다.
+                                모든 식사요리엔 튀김, 구이가 함께 제공됩니다. 저녁코스는 4만원 마쯔코스, 6만원 란코스, 8만원 키쿠코스, 10만원 사쿠라코스가 있으며 손님의 요청에 의해
+                                5만원코스도 제공하고있습니다. 발레파킹 서비스가 무료입니다.
+                                주차공간은 20대 정도라 인근 관공서에서 제공하는 저녁시간 무료주차를 이용하실수도 있습니다. * 발레파킹 서비스가 무료입니다.
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=7&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/몫몫3.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">2. 몫몫</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                일식당</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 진구 동천로95번길 11 2층</p>
+                            <p class="txt_line">
+                                오픈 초기 서비스의 질을 높이기 위해 음식은 르꼬르동블루 출신 권우정 셰프가 총괄하여 준비 하였고, 고기의 숙성은 마스터 최정락 에이징 마스터의 교육으로 더욱
+                                정갈하게 진행하였습니다.
+                                각자의 역할에 최선을 다하는 마음 몫몫 에서 제공하는 서비스는 구성원 각각의 역량과 모두의 합심으로 이루어져 있습니다. 정성스러운 요리, 운영 매니저의
+                                센스있는 응대, 스텝들의 친절함. 각자의 역할에 최선을 다하는 플레이버 다이닝으로 거듭나겠습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=8&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/이슈모리2.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">3. 이슈모리</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                초밥 & 롤</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 진구 신천대로62번길 45 1층</p>
+                            <p class="txt_line">
+                                이슈모리는 20년 일식 경력의 오너 쉐프가 매일 신선한 재료로 직접 요리합니다. 혼자서도 즐길수 있는 다찌에서 여럿이 함께할수 있는 룸도 준비되어 있습니다~~
+                                점심 특선의 착한 가격으로도 맛볼수 있는 퀄리티 좋은 스시!! 소중한 사람에게 대접하고싶을땐 수제 특선초밥!! 또 특별한 날이 아닌 일상에서의 스시와 맥주
+                                한잔은 고객님에게 최고의 선물이 될것입니다.
+                                * 룸이용은 하루 전 예약 하시면 사용 할 수 있고 10분 이내 입장하실수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        </body>
+        <div>
+            <br>
+            <div style="text-align-last: center"><h3>< 부산 일식 맛집 전체보기 ></h3></div>
+            <div id="div1"></div>
+        </div>
+        <br/> <br/>
+    </th:block>
+</th:block>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+
+        <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#div1").load("http://localhost:8081/resturant/list1?page=1&type=c&keyword=양식");
+                });
+            </script>
+        </head>
+
+        <style>
+            .content {
+            }
+            .img3{
+                object-fit: cover;
+
+            }
+            .restaurantName {
+                color: #1e7e34;
+                font-weight: bolder;
+                font-size: 22px;
+            }
+
+            .restaurantAddress {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .restaurantType {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .foodName {
+                font-weight: bold;
+                font-size: 13px;
+            }
+
+            .txt_line {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 8; /* 라인수 */
+                -webkit-box-orient: vertical;
+                word-wrap: break-word;
+                line-height: 1.5em;
+                height: auto;
+                font-size: 13.5px;
+                font-family: auto;
+                text-overflow: ellipsis;
+            }
+
+        </style>
+
+        <body>
+
+        <div class="header"><br>
+
+            <h1 class="page-item" style="color: #fd7e14"><br/><br/>
+                양식 베스트 TOP3</h1>
+            <h8>"마! 부산이 국밥만 먹는줄 아나! 고급스런 양식도 즐겨보세요!"</h8>
+            <br>
+            <hr>
+        </div>
+
+        <div class="content" style="text-align:-webkit-center">
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=39&page=1">
+                            <img   class ="img3"  src="/image/음식점사진/매드독스2.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">1. 매드독스</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                피자 & 파스타</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 수영구 광안해변로 235 </p>
+                            <p class="txt_line">
+                                고객 여러분 안녕하십니까?
+                                저희 매드독스 시카고피자는 절대 프랜차이즈가맹점이 아닙니다! 모든 메뉴는 자체 개발한 메뉴이며 가급적 웰빙 건강 식재료를 사용하여 만들고 있으며 소스재료를
+                                전부
+                                공개할 수는 없지만 예를 들면 소스의 매운맛을 내기위하여 생마늘을 갈아 넣는 등 건강한 식재료를 사용하여 음식을 만들고 있습니다. 그렇기 때문에 매드독스
+                                시카고피자는 전국 어디에서도 맛 볼 수 없는 독특한 맛을 지닌 시카고피자입니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=37&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/스케줄해운대2.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">2. 스케줄해운대</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                양식</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 해운대구 해운대해변로 287 2층</p>
+                            <p class="txt_line">
+                                주차는 해운대 씨클라우드 호텔 지하에 주차가능합니다. 주차대수는 '무한대'!, 주차시간도 '무한대'! 입니다. 카페만 이용하셔도 무한대 제공하니 편하게
+                                이용하세요^^
+                                건물 1층 입구는 두곳입니다. 구남로 방향과 해운대백사장 방향이 있습니다.
+                                에스컬레이터 타고 올라오시면 '스케줄 해운대' 찾을 수 있습니다.
+                                차량이용시 : 스케줄해운대 OR 씨클라우드 호텔 치시면 됩니다. 지하주차장에 대시고
+                                1층에서 하차 후 2층으로 올라오시면 편리합니다!
+                                대중교통이용시 : 해운대역(2호선)에서 구남로방향으로 50M걸어 오시면 끝자락에
+                                좌측편에 스타벅X건물 옆에 위치하고 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=43&page=1">
+                            <img   class ="img3"  src="/image/음식점사진/서끝3.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">3. 서끝</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                양식</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 사하구 다대로 698 4층</p>
+                            <p class="txt_line">
+                                다대포에서 전망이 제일 좋은 레스토랑겸 펍입니다.
+                                맛에서는 떨어지지 않으려고 노력합니다.
+                                추천메뉴는 찹스테이크랑 감바스입니다.
+                                찹스테이크는 원물을 손질 후 시즈닝과정을 거쳐 진공포장, 수비드를 하게됩니다. 하루에 정해진 수량만 판매하기에 일찍 소진 될 수도 있습니다.
+                                맛있는 음식, 맛있는 맥주, 예쁜 칵테일, 따뜻한 인테리어를 드릴 수 있는 서끝입니다.
+                                ☆ 주차는 다대포해수욕장역 2번출구 옆 주차장에 하시거나, 가게 뒤 대우주차장에 하시면 1시간 무료입니다!
+                                브레이크타임은 없습니다. 브레이크타임 공지는 인스타로 하니, seokkeut 인스타 팔로우 부탁드립니다!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+
+        </body>
+        <div>
+            <br>
+            <div style="text-align-last: center"><h3>< 부산 양식 맛집 전체보기 ></h3></div>
+            <div id="div1"></div>
+        </div>
+        <br/> <br/>
+    </th:block>
+</th:block>
+</html>

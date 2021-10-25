@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body{
+            text-align-last: center;
+        }
+
+        .form-group{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+        <div class="content">
+            <h1 class="mt-4">회원가입 페이지</h1>
+            <form th:action="@{/resturant/register2}" th:method="post">
+                <!--                <div class="form-group">-->
+                <!--                    <input type="hidden" class="form-control" name="reviewCnt" th:value="0">-->
+                <!--                    <input type="hidden" class="form-control" name="avg" th:value="0.0">-->
+                <!--                </div>-->
+                <div class="form-group">
+                    <label> <img src="/image/joinin.png"></label>
+
+                    <br>
+                    <input type="text" class="form-control" name="email" placeholder="email을 입력하시오." style="width:100%"><br>
+                    <input type="text" class="form-control" name="password" placeholder="password을 입력하시오." style="width:100%">
+                    <br>
+                    <input type="text" class="form-control" name="name" placeholder="name을 입력하시오." style="width:100%">
+                    <br>
+                    <button type="submit" class="btn btn-primary">전송</button>
+                </div>
+
+                <div class="uploadResult">
+                    <ul>
+
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</th:block>
+</body>
+</html>

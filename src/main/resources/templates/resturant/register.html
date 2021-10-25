@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+        <head>
+            <meta charset="UTF-8">
+
+            <style>
+
+                .header{
+                    margin-top: 60px;
+                }
+
+                .content{
+                    margin-left: 20%;
+                    margin-right: 20%;
+                }
+
+                .uploadResult {
+                    width: 100%;
+                    background-color: gray;
+                    margin-top: 10px;
+                }
+
+                .uploadResult ul {
+                    display: flex;
+                    flex-flow: row;
+                    justify-content: center;
+                    align-items: center;
+                    vertical-align: top;
+                    overflow: auto;
+                }
+
+                .uploadResult ul li {
+                    list-style: none;
+                    padding: 10px;
+                    margin-left: 2em;
+                }
+
+                .uploadResult ul li img {
+                    width: 100px;
+                }
+
+                label, input {
+                    font-family: 'Do Hyeon', sans-serif;
+                    font-size: 20px;
+                }
+
+            </style>
+        </head>
+        <body>
+        <div class="header">
+            <h1 class="mt-4">맛집 등록 페이지</h1>
+        </div>
+        <div class="content">
+            <form th:action="@{/resturant/register}" th:method="post">
+                <div class="form-group">
+                    <label>제목</label>
+                    <input type="text" class="form-control" name="title" placeholder="가게명을 입력하세요.">
+                </div>
+                <div class="form-group">
+                    <label>주소</label>
+                    <input type="text" class="form-control" name="address" placeholder="주소를 입력하세요.">
+                </div>
+                <div class="form-group">
+                    <label>연락처</label>
+                    <input type="text" class="form-control" name="phoneNumber" placeholder="연락처를 입력하세요.">
+                </div>
+                <div class="form-group">
+                    <label>메뉴 분류</label>
+                    <input type="text" class="form-control" name="type" placeholder="메뉴 분류를 입력하세요.">
+                </div>
+                <div class="form-group">
+                    <label>운영 시간</label>
+                    <input type="text" class="form-control" name="operatingTime" placeholder="운영시간을 입력하세요.">
+                </div>
+                <div class="form-group fileForm">
+                    <label>이미지 파일</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input files" id="fileInput" multiple>
+                        <label class="custom-file-label" data-browse="Browse"></label>
+                    </div>
+                </div>
+                <div class="box">
+
+                </div>
+                <button type="submit" class="btn btn-primary">전송</button>
+                <div class="uploadResult">
+                    <ul>
+
+                    </ul>
+                </div>
+            </form>
+        </div>
+        <script>
+            $(document).ready(function (e) {
+                var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$"); // 정규 표현식을 이용한 파일 확장자 검사
+                var maxSize = 10485760; // 10MByte, 이미지 파일 최대 크기
+
+                function checkExtension(fileName, fileSize) { // 이미지 파일 크기 및 확장자 검사
+                    if (fileSize >= maxSize) { // 이미지 파일 크기 검사
+                        alert("파일 사이즈 초과");
+                        return false;
+                    }
+
+                    if (regex.test(fileName)) { // 파일 확장자 검사
+                        alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+                        return false;
+                    }
+                    return true;
+                }
+
+
+                $(".custom-file-input").on("change", function () {
+
+                    var fileName = $(this).val().split("\\").pop();
+
+
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+
+                    var formData = new FormData();
+
+
+                    var inputFile = $(this);
+
+
+                    var files = inputFile[0].files;
+
+                    var appended = false;
+
+                    for (var i = 0; i < files.length; i++) {
+                        // 이미지들의 최대 크기 및 확장자 검사
+                        if (!checkExtension(files[i].name, files[i].size)) {
+                            return false;
+                        }
+                        console.log(files[i]);
+                        // append(): 선택된 요소의 마지막에 새로운 요소나 콘텐츠를 추가
+                        formData.append("uploadFiles", files[i]);
+                        appended = true;
+                    }
+
+                    // upload를 하지 않는다.
+                    if (!appended) {
+                        return;
+                    }
+
+                    // formData에 있는 데이터를 하나씩 가져와서 개발자 도구의 콘솔창에 데이터 확인
+                    for (var value of formData.values()) {
+                        console.log(value);
+                    }
+
+                    // 실제 업로드 부분, upload ajax
+                    $.ajax({
+                        url: '/uploadAjax',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (result) {
+                            console.log(result);
+                            // 나중에 화면 처리
+                            showResult(result);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus);
+                        }
+                    });
+
+                });
+
+                // 이미지 업로드 시 이미지 보이기
+                function showResult(uploadResultArr) {
+                    var uploadUL = $(".uploadResult ul");
+                    var str = "";
+                    $(uploadResultArr).each(function (i, obj) {
+                        str += "<li data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'>";
+                        str += " <div>";
+                        str += "<button type='button' data-file=\'" + obj.imageURL + "\' ";
+                        str += "class='btn-warning btn-sm'>X</button><br>";
+                        str += "<img src='/display?fileName=" + obj.thumbnailURL + "'>";
+                        str += "</div>";
+                        str += "</li>";
+                    });
+                    uploadUL.append(str);
+                }
+
+                // 이미지 업로드 시 X 버튼을 이용하여 취소하기
+                $(".uploadResult").on("click", "li button", function (e) {
+                    console.log("delete file");
+                    var targetFile = $(this).data("file");
+                    var targetLi = $(this).closest("li");
+
+                    $.ajax({
+                        url: '/removeFile',
+                        data: {fileName: targetFile},
+                        dataType: 'text',
+                        type: 'POST',
+                        success: function (result) {
+                            alert(result);
+                            targetLi.remove();
+                        }
+                    });
+                });
+
+                $(".btn-primary").on("click", function (e) {
+                    // a 태그나 submit 태그는 누르게 되면 href 를 통해 이동하거나, 창이 새로고침하여 실행됩니다. preventDefault 를 통해 이러한 동작을 막아줄 수 있습니다.
+                    e.preventDefault();
+
+                    var str = "";
+
+                    $(".uploadResult li").each(function (i, obj) {
+                        var target = $(obj);
+
+                        str += "<input type='hidden' name='imageDTOList[" + i + "].imgName' value='" + target.data('name') + "'>";
+                        str += "<input type='hidden' name='imageDTOList[" + i + "].path' value='" + target.data('path') + "'>";
+                        str += "<input type='hidden' name='imageDTOList[" + i + "].uuid' value='" + target.data('uuid') + "'>";
+
+                    });
+                    // 태그들이 추가된 것을 확인한 후에 comment를 제거
+                    $(".box").html(str);
+                    $("form").submit();
+                });
+
+
+            });
+        </script>
+        </body>
+    </th:block>
+</th:block>
+
+</html>

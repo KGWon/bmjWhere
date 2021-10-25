@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this :: content})}">
+    <th:block th:fragment="content">
+
+        <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $("#div1").load("http://localhost:8081/resturant/list1?page=1&type=c&keyword=한식");
+                });
+            </script>
+        </head>
+
+        <style>
+            .content {
+            }
+
+            .img3{
+                object-fit: cover;
+
+            }
+
+            .restaurantName {
+                color: #1e7e34;
+                font-weight: bolder;
+                font-size: 22px;
+
+            }
+
+            .restaurantAddress {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .restaurantType {
+                color: #4e555b;
+                font-size: 15px;
+                margin-left: 10px;
+                font-weight: bold;
+            }
+
+            .foodName {
+                font-weight: bold;
+                font-size: 13px;
+            }
+
+            .txt_line {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 8; /* 라인수 */
+                -webkit-box-orient: vertical;
+                word-wrap: break-word;
+                line-height: 1.5em;
+                height: auto;
+                font-size: 13.5px;
+                font-family: auto;
+                text-overflow: ellipsis;
+            }
+
+        </style>
+
+        <body>
+
+        <div class="header"><br>
+
+            <h1 class="page-item" style="color: #fd7e14"><br/><br/>
+                한식 베스트 TOP3</h1>
+            <h8>"한국인 외국인 할거없이 좋아하는 우리 음식~ 한식!!"</h8>
+            <br>
+            <hr>
+        </div>
+
+        <div class="content" style="text-align:-webkit-center">
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=21&page=1">
+                            <img class ="img3" src="/image/음식점사진/명지첫집1.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">1. 명지첫집</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                한식</a>
+                            <p class="card-text" th:class="restaurantAddress">부산 강서구 식만로 164 </p>
+                            <p class="txt_line">
+                                명지동 대표 보쌈,족발집.<br>
+                                쭈꾸미와 보쌈의 절묘한 만남.<br>
+                                40년 경력의 2대를 이어온 명품 맛.<br>
+                                조선 최고의 소금과 대파를 생산했던 명지도를 아시나요?<br>
+                                명지첫집은 좋은 소금으로 만든 9가지 젓갈, 명지 대파로 맛을 더해 특별한 보쌈요리를 선보입니다.
+                                부산 명지! 하면 떠오르는 첫 번째 식당이 되겠습니다.</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=30&page=1">
+                            <img  class ="img3" src="/image/음식점사진/청담1.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">2. 청담</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                한정식</a>
+                            <p class="card-text" th:class="restaurantAddress">부산시 연제구 연안로1</p>
+                            <p class="txt_line">
+                                1986년도에 오픈한 청담은 APEC정상회담 공식지정 업체로서 부산을 대표하는 한정식집으로 자리매김 하였습니다.<br>
+                                상견례,칠순,생신,손님접대,가족모임의 명소로서 정성스런 음식과 품위있는 서비스로 고마운 분들과의 소중한 자리를 빛내 드리겠습니다.<br>
+                                언제든지 연락주세요. 최고의 서비스로 대접하겠습니다.^^
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class="card mb-4" style="max-width: 800px; border : hidden">
+                <div class="row g-0">
+                    <div class="col-md-auto">
+                        <a href="http://localhost:8081/resturant/read?rno=29&page=1">
+                            <img  class ="img3"  src="/image/음식점사진/경북산꼼장어3.jpg" width="280px" height="280px">
+                        </a>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body" style="text-align-last: left">
+                            <h5 class="card-title" th:class="restaurantName">3. 경북산꼼장어</h5>
+                            <a class="card-text" th:class="restaurantType">음식 타입 :
+                                한식 & 꼼장어</a>
+                            <p class="card-text" th:class="restaurantAddress">부산 동구 초량로 25</p>
+                            <p class="txt_line">
+                                * 100% 국내산 꼼장어만을 취급하는 맛집‼ * <br>
+                                1963년도부터 3대째 이어온 전통 꼼장어 맛집‼️
+                                1963년도부터 오랜기간 한자리에서 맛과 전통을 이어온 꼼장어 전문점입니다. 3대에 걸쳐 근 60년간 운영해오던 가게가 새롭게 꽃단장하여 고객님들께 깔끔한
+                                모습으로 나타나게 되었습니다☺️<br>많은 사랑과 관심 부탁드립니다🤗 </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        </body>
+        <div>
+            <br>
+            <div style="text-align-last: center"><h3>< 부산 한식 맛집 전체보기 ></h3></div>
+            <div id="div1"></div>
+        </div>
+        <br/> <br/>
+    </th:block>
+</th:block>
+</html>
